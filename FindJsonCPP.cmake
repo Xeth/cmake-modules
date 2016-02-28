@@ -9,8 +9,8 @@ else  (JSONCPP_INCLUDE_DIR AND JSONCPP_LIBRARY)
 if (WIN32)
     find_path (JSONCPP_ROOT_DIR
       HINTS $ENV{PROGRAMFILES}/jsoncpp
-      NAMES jsoncpp/json/value.h
-      PATHS ENV JSONCPPROOT
+      NAMES include/json/value.h
+      #PATH_SUFFIXES jsoncpp
       DOC "jsoncpp root directory")
 else ()
     find_path (JSONCPP_ROOT_DIR
@@ -18,6 +18,8 @@ else ()
       PATHS ENV JSONCPPROOT
       DOC "jsoncpp root directory")
 endif()
+
+    message("^^^^^^^^^^^^^^^ JSON_ROOT="${JSONCPP_ROOT_DIR})
 
     find_path (JSONCPP_INCLUDE_DIR
       NAMES json/value.h
