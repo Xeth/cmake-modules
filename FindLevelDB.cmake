@@ -8,9 +8,15 @@ else  (LEVELDB_INCLUDE_DIR AND LEVELDB_LIBRARIES)
 
     find_path(LEVELDB_INCLUDE_DIR NAMES leveldb/db.h)
     find_library(LEVELDB_LIBRARY NAMES libleveldb.a libleveldb.lib)
+
     find_library(SNAPPY_LIBRARY snappy)
     find_path(SNAPPY_INCLUDE_DIR snappy.h PATH_SUFFIXES snappy)
-    set(LEVELDB_LIBRARIES ${LEVELDB_LIBRARY} ${SNAPPY_LIBRARY})
+
+    if(SNAPPY_LIBRARY)
+        set(LEVELDB_LIBRARIES ${LEVELDB_LIBRARY} ${SNAPPY_LIBRARY})
+    else()
+        set(LEVELDB_LIBRARIES ${LEVELDB_LIBRARY})
+    endif()
 
 endif  (LEVELDB_INCLUDE_DIR AND LEVELDB_LIBRARIES)
 
