@@ -6,20 +6,18 @@ else  (JSONCPP_INCLUDE_DIR AND JSONCPP_LIBRARY)
 
     set(JsonCPP_FIND_QUIETLY FALSE)
 
-if (WIN32)
-    find_path (JSONCPP_ROOT_DIR
-      HINTS $ENV{PROGRAMFILES}/jsoncpp
-      NAMES include/json/value.h
-      #PATH_SUFFIXES jsoncpp
-      DOC "jsoncpp root directory")
-else ()
-    find_path (JSONCPP_ROOT_DIR
-      NAMES jsoncpp/json/value.h
-      PATHS ENV JSONCPPROOT
-      DOC "jsoncpp root directory")
-endif()
-
-    message("^^^^^^^^^^^^^^^ JSON_ROOT="${JSONCPP_ROOT_DIR})
+    if (WIN32)
+        find_path (JSONCPP_ROOT_DIR
+          HINTS $ENV{PROGRAMFILES}/jsoncpp
+          NAMES include/json/value.h
+          #PATH_SUFFIXES jsoncpp
+          DOC "jsoncpp root directory")
+    else ()
+        find_path (JSONCPP_ROOT_DIR
+          NAMES jsoncpp/json/value.h
+          PATHS ENV JSONCPPROOT
+          DOC "jsoncpp root directory")
+    endif()
 
     find_path (JSONCPP_INCLUDE_DIR
       NAMES json/value.h
