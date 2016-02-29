@@ -6,9 +6,16 @@ else  (JSONCPP_INCLUDE_DIR AND JSONCPP_LIBRARY)
 
     set(JsonCPP_FIND_QUIETLY FALSE)
 
-    if (WIN32)
+    if (WIN32 OR MSVC)
+
+        if(CMAKE_GENERATOR MATCHES Win64)
+            set(PROGRAMFILES_DIR $ENV{ProgramW6432})
+        else()
+            set(PROGRAMFILES_DIR $ENV{PROGRAMFILES})
+        endif()
+
         find_path (JSONCPP_ROOT_DIR
-          HINTS $ENV{PROGRAMFILES}/jsoncpp
+          HINTS ${PROGRAMFILES_DIR}/jsoncpp
           NAMES include/json/value.h
           #PATH_SUFFIXES jsoncpp
           DOC "jsoncpp root directory")
