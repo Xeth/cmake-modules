@@ -1,0 +1,21 @@
+include(FindPkgConfig)
+
+pkg_check_modules(PC_APPINDICATOR appindicator-0.1)
+
+find_path(APPINDICATOR_INCLUDE_DIR NAMES libappindicator/app-indicator.h
+    HINTS ${PC_APPINDICATOR_INCLUDEDIR} ${PC_APPINDICATOR_INCLUDE_DIRS}
+    PATH_SUFFIXES libappindicator-0.1)
+
+find_library(APPINDICATOR_LIBRARY NAMES appindicator)
+
+include(FindPackageHandleStandardArgs)
+
+find_package_handle_standard_args(APPINDICATOR DEFAULT_MSG APPINDICATOR_LIBRARY APPINDICATOR_INCLUDE_DIR)
+
+if(APPINDICATOR_FOUND)
+    set(APPINDICATOR_LIBRARIES ${APPINDICATOR_LIBRARY})
+    set(APPINDICATOR_INCLUDE_DIRS ${APPINDICATOR_INCLUDE_DIR})
+endif()
+
+mark_as_advanced(APPINDICATOR_INCLUDE_DIR APPINDICATOR_LIBRARY)
+
