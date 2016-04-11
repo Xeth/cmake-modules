@@ -7,7 +7,7 @@ else  (LEVELDB_INCLUDE_DIR AND LEVELDB_LIBRARIES)
     set(LevelDB_FIND_QUIETLY FALSE)
 
     find_path(LEVELDB_INCLUDE_DIR NAMES leveldb/db.h)
-    find_library(LEVELDB_LIBRARY NAMES libleveldb.a libleveldb.lib)
+    find_library(LEVELDB_LIBRARY leveldb)
 
     find_library(SNAPPY_LIBRARY snappy)
     find_path(SNAPPY_INCLUDE_DIR snappy.h PATH_SUFFIXES snappy)
