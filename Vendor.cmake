@@ -11,17 +11,7 @@ function(VENDOR_CHECK_DOWNLOAD EXEC)
         endif()
     endif()
 
-    find_program(${EXEC}_PATH ${EXEC}${EXTENSION})
-
-    if(${EXEC}_PATH)
-        message(${EXEC} " - found ${${EXEC}_PATH}")
-    else()
-        message(${EXEC} " - not found")
-    endif()
-
-
-    if(NOT ${EXEC}_PATH AND NOT EXISTS ${PROJECT_BINARY_DIR}/vendor/bin/${EXEC}${EXTENSION})
-
+    if(NOT EXISTS ${PROJECT_BINARY_DIR}/vendor/bin/${EXEC}${EXTENSION})
         if(APPLE)
             set(ARCH "x86_64")
         else()
@@ -52,10 +42,8 @@ function(CHECK_BIN EXEC)
 
     if(${EXEC}_PATH)
         set(${EXEC}_FOUND 1 PARENT_SCOPE)
-        message(${EXEC} " - found ${${EXEC}_PATH}")
     else()
         set(${EXEC}_FOUND 0 PARENT_SCOPE)
-        message(${EXEC} " - not found")
     endif()
 endfunction(CHECK_BIN)
 
