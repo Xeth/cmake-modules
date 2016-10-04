@@ -31,14 +31,15 @@ function(VENDOR_CHECK_DOWNLOAD EXEC)
 
 endfunction(VENDOR_CHECK_DOWNLOAD)
 
-function(CHECK_BIN EXEC)
+function(CHECK_BIN EXEC HINTS)
     if(MSVC OR WIN32)
         set(EXTENSION ".exe")
+        
     else()
         set(EXTENSION "")
     endif()
 
-    find_program(${EXEC}_PATH ${EXEC}${EXTENSION})
+    find_program(${EXEC}_PATH ${EXEC}${EXTENSION} HINTS ${HINTS})
 
     if(${EXEC}_PATH)
         set(${EXEC}_FOUND 1 PARENT_SCOPE)
@@ -62,13 +63,13 @@ endfunction(CHECK_BIN_PATH)
 
 
 
-function(REQUIRE_VENDOR_BIN EXEC EXEC_PATH)
+function(REQUIRE_VENDOR_BIN EXEC EXEC_PATH HINTS)
     string(TOUPPER ${EXEC} EXEC_UPPER)
     if(EXEC_PATH)
         CHECK_BIN_PATH(${EXEC} ${EXEC_PATH})
         add_definitions(-D__${EXEC_UPPER}_PATH__="${EXEC_PATH}")
     else()
-        CHECK_BIN(${EXEC})
+        CHECK_BIN(${EXEC} "${HINTS}")
         if(NOT ${EXEC}_FOUND)
             if(BIN_DOWNLOAD)
                 VENDOR_CHECK_DOWNLOAD(${EXEC})
