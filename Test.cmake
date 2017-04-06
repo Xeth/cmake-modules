@@ -9,14 +9,13 @@ endfunction(ADD_TEST_TARGET)
 
 function(GENERATE_QT_TEST_MAIN CPP_MAIN TEST_CASE_DIR)
 
-    file(GLOB_RECURSE TEST_FILES ${TEST_CASE_DIR}/*)
+    file(GLOB_RECURSE TEST_FILES ${TEST_CASE_DIR}/*.hpp)
     set(INCLUDES "#include <QTest>\n#include <iostream>\n#include <boost/preprocessor/variadic/to_seq.hpp>\n#include <boost/preprocessor/seq/for_each.hpp>")
     set(TEST_LIST "")
 
     foreach(TEST_FILE ${TEST_FILES})
         set(INCLUDES "${INCLUDES}\n#include \"${TEST_FILE}\"")
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
-        message("test name " ${TEST_NAME})
         list(APPEND TEST_LIST ${TEST_NAME})
     endforeach()
 
@@ -27,8 +26,8 @@ function(GENERATE_QT_TEST_MAIN CPP_MAIN TEST_CASE_DIR)
 template<class Test>                                                            \n\
 int ExecuteTest(int argc, char **argv)                                          \n\
 {                                                                               \n\
-    Test test;                                                                  \n\
-    return QTest::qExec(&test, argc, argv);                                     \n\
+    Test test\;                                                                  \n\
+    return QTest::qExec(&test, argc, argv)\;                                     \n\
 }                                                                               \n\
                                                                                 \n\
 #define EXECUTE_TEST(r, data, Test) ||ExecuteTest<Test>(argc, argv)             \n\
@@ -36,12 +35,12 @@ int ExecuteTest(int argc, char **argv)                                          
 #define RUN_TESTS(...) RUN_TEST_SEQ(BOOST_PP_VARIADIC_TO_SEQ (__VA_ARGS__))     \n\
 int main(int argc, char** argv)                                                 \n\
 {                                                                               \n\
-    int status = RUN_TESTS(${TEST_LIST});                                       \n\
+    int status = RUN_TESTS(${TEST_LIST})\;                                       \n\
     if(status)                                                                  \n\
     {                                                                           \n\
-        std::cout<<\"\\nUnit-Test failed\\n\";                                  \n\
+        std::cout<<\"\\nUnit-Test failed\\n\"\;                                  \n\
     }                                                                           \n\
-    return status;                                                              \n\
+    return status\;                                                              \n\
 }                                                                               \n\
 ")
     file(WRITE ${CPP_MAIN} ${SOURCE_CODE})
