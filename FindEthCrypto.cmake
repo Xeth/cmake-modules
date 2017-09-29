@@ -1,13 +1,13 @@
 include(FindPackageHandleStandardArgs)
 
-if (ETHCRYPTO_INCLUDE_DIR AND ETHCRYPTO_LIBRARY)
+if(ETHCRYPTO_INCLUDE_DIRS AND ETHCRYPTO_LIBRARY)
     set(EthCrypto_FIND_QUIETLY TRUE)
 
-else (ETHCRYPTO_INCLUDE_DIR AND ETHCRYPTO_LIBRARY)
+else()
     set(EthCrypto_FIND_QUIETLY FALSE)
 
     if (WIN32)
-        FIND_PATH(ETHCRYPTO_INCLUDE_DIR ethcrypto/key/KeyPair.hpp
+        FIND_PATH(ETHCRYPTO_INCLUDE_DIRS ethcrypto/key/KeyPair.hpp
             PATHS
             ${ETHCRYPTO_PATH}/include
             $ENV{PROGRAMFILES}/ethcrypto
@@ -19,7 +19,7 @@ else (ETHCRYPTO_INCLUDE_DIR AND ETHCRYPTO_LIBRARY)
             $ENV{PROGRAMFILES}/ethcrypto
             DOC "The ethcrypto library")
     else (WIN32)
-        FIND_PATH(ETHCRYPTO_INCLUDE_DIR ethcrypto/key/KeyPair.hpp
+        FIND_PATH(ETHCRYPTO_INCLUDE_DIRS ethcrypto/key/KeyPair.hpp
             PATHS
             ${ETHCRYPTO_PATH}/include
             /usr/local/include
@@ -39,9 +39,9 @@ else (ETHCRYPTO_INCLUDE_DIR AND ETHCRYPTO_LIBRARY)
             /opt/local/lib
             DOC "The ethcrypto library")
     endif (WIN32)
-endif (ETHCRYPTO_INCLUDE_DIR AND ETHCRYPTO_LIBRARY)
+endif (ETHCRYPTO_INCLUDE_DIRS AND ETHCRYPTO_LIBRARY)
 
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(EthCrypto DEFAULT_MSG ETHCRYPTO_INCLUDE_DIR ETHCRYPTO_LIBRARY)
-mark_as_advanced (ETHCRYPTO_INCLUDE_DIR ETHCRYPTO_LIBRARY)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(EthCrypto DEFAULT_MSG ETHCRYPTO_INCLUDE_DIRS ETHCRYPTO_LIBRARY)
+mark_as_advanced (ETHCRYPTO_INCLUDE_DIRS ETHCRYPTO_LIBRARY)
 
